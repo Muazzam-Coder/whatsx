@@ -164,12 +164,12 @@
                 <a href="{% url 'dashboard' %}">Dashboard</a>
                 <a href="{% url 'send_message' %}">Send Message</a>
                 <a href="{% url 'message_history' %}">Messages</a>
-                <a href="#">Messages</a>
+                <!-- <a href="#">Messages</a> -->
                 <!-- <a href="{% url 'logout' %}">Logout</a> -->
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                <a href=""><form action="{% url 'logout' %}" method="post" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="logout-button">Logout</button>
-                </form>
+                </form></a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'register' %}">Register</a>
