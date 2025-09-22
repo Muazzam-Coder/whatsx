@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Message History - WhatsApp Platform{% endblock %}
+
+{% block content %}
+<style>
+    .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: var(--bg-medium);
+    }
+    .history-table th, .history-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .history-table th {
+        background-color: var(--bg-light);
+    }
+    .history-table td {
+        color: var(--text-secondary);
+    }
+    .history-table .message-col {
+        max-width: 400px;
+        white-space: pre-wrap; /* Allows text to wrap */
+        word-wrap: break-word;
+    }
+    .no-history {
+        text-align: center;
+        padding: 50px;
+        background-color: var(--bg-medium);
+        border-radius: 8px;
+    }
+</style>
+
+<div class="container">
+    <div class="content-header">
+        <h1>Message History</h1>
+        <p>A record of all the messages you have sent.</p>
+    </div>
+
+    {% if history %}
+    <div class="table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Recipient</th>
+                    <th>Phone Number</th>
+                    <th class="message-col">Message</th>
+                    <th>Date Sent</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.recipient_name }}</td>
+                    <td>{{ item.phone_number }}</td>
+                    <td class="message-col">{{ item.message_content }}</td>
+                    <td>{{ item.sent_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ item.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="no-history">
+            <h3>You haven't sent any messages yet.</h3>
+            <p>Once you send a message, it will appear here.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

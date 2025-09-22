@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - WhatsApp Platform{% endblock %}
+
+{% block content %}
+<style>
+    /* This style helps display Django's form help text and errors nicely */
+    .form-group .helptext {
+        font-size: 0.85em;
+        color: var(--text-secondary);
+        margin-top: 5px;
+        list-style: none;
+        padding-left: 0;
+    }
+    .form-group ul {
+        list-style: none;
+        padding: 0;
+    }
+</style>
+
+<div class="form-container">
+    <form method="post">
+        <h1><i class="fas fa-user-plus"></i> Register</h1>
+        
+        {% csrf_token %}
+        
+        <!-- This loop will render all form fields (username, password, etc.) -->
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }} {# This renders the input field itself #}
+
+                {% if field.help_text %}
+                    <div class="helptext">{{ field.help_text|safe }}</div>
+                {% endif %}
+                
+                {% for error in field.errors %}
+                    <p style="color: #e74c3c; font-size: 0.9em; margin-top: 5px;">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-green"><i class="fas fa-user-plus"></i> Register</button>
+
+        <div class="form-footer">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </form>
+</div>
+
+{% endblock %}  {# <--- THIS LINE IS STILL MISSING FROM YOUR CODE #}

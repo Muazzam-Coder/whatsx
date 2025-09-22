@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compose Message</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .template-list { margin-bottom: 20px; }
+        .template-list button { margin-right: 10px; padding: 8px 15px; cursor: pointer; }
+        textarea { width: 80%; height: 200px; }
+        .message-form button { padding: 10px 20px; cursor: pointer; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .header a { text-decoration: none; color: blue; }
+        .header form { display: inline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Compose Message</h1>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! | <a href="/admin/">Admin Panel</a> | <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
+    </div>
+
+    <h2>Select a Template:</h2>
+    <div class="template-list">
+        {% for template in templates %}
+            <button onclick="window.location.href='{% url 'compose_message_with_template' template.id %}'">{{ template.name }}</button>
+        {% empty %}
+            <p>No templates available. Admins can create them in the <a href="/admin/core/messagetemplate/">admin panel</a>.</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <h2>Your Message:</h2>
+    <form method="post" class="message-form">
+        {% csrf_token %}
+        {{ form.message_content.errors }}
+        <label for="{{ form.message_content.id_for_label }}">Message:</label>
+        {{ form.message_content }}
+        <br><br>
+        <button type="submit">Send Message (Prototype)</button>
+    </form>
+</body>
+</html>

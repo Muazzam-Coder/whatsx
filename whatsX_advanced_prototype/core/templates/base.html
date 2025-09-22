@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WhatsApp Platform{% endblock %}</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #1e2124;
+            --bg-medium: #282b30;
+            --bg-light: #36393e;
+            --text-primary: #ffffff;
+            --text-secondary: #b9bbbe;
+            --accent-green: #2ecc71;
+            --accent-purple: #8e44ad;
+            --border-color: #4b4f56;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            .logout-button {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            color: var(--text-secondary); /* Matches your other nav links */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Matches body font */
+            font-size: 1.1em; /* Matches your other nav links */
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .logout-button:hover {
+            color: var(--text-primary); /* Matches your other nav links hover */
+        }
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        /* --- Navbar / Header --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: var(--bg-medium);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .navbar .logo i {
+            color: var(--accent-green);
+        }
+        .navbar .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+        .navbar .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        /* --- Buttons --- */
+        .btn {
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+        .btn i {
+            margin-right: 8px;
+        }
+        .btn-green {
+            background-color: var(--accent-green);
+            color: var(--text-primary);
+        }
+        .btn-green-outline {
+            background-color: transparent;
+            color: var(--accent-green);
+            border: 2px solid var(--accent-green);
+        }
+        /* --- Forms --- */
+        .form-container {
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: var(--bg-medium);
+            border-radius: 8px;
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-container h1 i {
+            color: var(--accent-green);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .form-container .btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+        .form-footer a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+        /* --- Main Content Specifics --- */
+        .content-header {
+            margin-bottom: 30px;
+        }
+        .content-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        .content-header p {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fab fa-whatsapp"></i> WhatsApp Platform
+        </div>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'send_message' %}">Send Message</a>
+                <a href="{% url 'message_history' %}">Messages</a>
+                <a href="#">Messages</a>
+                <!-- <a href="{% url 'logout' %}">Logout</a> -->
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        <!-- Page specific content will go here -->
+        {% endblock %}
+    </main>
+
+</body>
+</html>

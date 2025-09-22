@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Send Message - WhatsApp Platform{% endblock %}
+
+{% block content %}
+<style>
+    .send-message-form {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 40px;
+        background-color: var(--bg-medium);
+        border-radius: 8px;
+    }
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .form-group textarea {
+        height: 150px;
+        resize: vertical;
+    }
+    .char-counter {
+        text-align: right;
+        font-size: 0.9em;
+        color: var(--text-secondary);
+        margin-top: 5px;
+    }
+    .form-actions {
+        margin-top: 30px;
+    }
+    .form-actions .btn {
+        margin-right: 15px;
+    }
+</style>
+
+<div class="container">
+    <div class="send-message-form">
+        <div class="content-header">
+            <h1><i class="fas fa-paper-plane"></i> Send Message</h1>
+            <p>Send WhatsApp messages to your contacts.</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_recipient_name">Recipient Name</label>
+                    <input type="text" name="recipient_name" id="id_recipient_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_phone_number">Phone Number</label>
+                    <input type="text" name="phone_number" id="id_phone_number" placeholder="Include country code (e.g., +1234567890)" required>
+                </div>
+            </div>
+
+            <!-- ==================================================== -->
+            <!-- ==  START: NEW TEMPLATE SELECTOR CODE             == -->
+            <!-- ==================================================== -->
+            <div class="form-group">
+                <label for="template-selector">Select a Template (Optional)</label>
+                <select id="template-selector" class="form-group" style="width: 100%; padding: 12px; background-color: var(--bg-light); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); font-size: 1em;">
+                    <option value="">-- Choose a template --</option>
+                    {% for template in templates %}
+                        <option value="{{ template.content }}">{{ template.name }}</option>
+                    {% empty %}
+                        <option value="" disabled>No templates found. Create them in the Admin Panel.</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- ==================================================== -->
+            <!-- ==  END: NEW TEMPLATE SELECTOR CODE               == -->
+            <!-- ==================================================== -->
+            
+            <div class="form-group">
+                <label for="id_message">Message</label>
+                <textarea name="message" id="id_message" required onkeyup="updateCharCounter(this)"></textarea>
+                <div class="char-counter"><span id="char-count">0</span> characters</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-green"><i class="fas fa-paper-plane"></i> Send Message</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-green-outline">Back to Dashboard</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateCharCounter(textarea) {
+        const charCount = textarea.value.length;
+        document.getElementById('char-count').innerText = charCount;
+    }
+
+    // Initialize counter on page load
+    document.addEventListener('DOMContentLoaded', (event) => {
+        updateCharCounter(document.getElementById('id_message'));
+    });
+
+    // ====================================================
+    // ==  START: NEW JAVASCRIPT FOR TEMPLATE POPULATION ==
+    // ====================================================
+    const templateSelector = document.getElementById('template-selector');
+    const messageTextarea = document.getElementById('id_message');
+
+    templateSelector.addEventListener('change', function() {
+        // Get the content from the selected option's value
+        const selectedContent = this.value;
+        // Update the textarea
+        messageTextarea.value = selectedContent;
+        // Trigger the character counter update
+        updateCharCounter(messageTextarea);
+    });
+    // ====================================================
+    // ==  END: NEW JAVASCRIPT                           ==
+    // ====================================================
+</script>
+{% endblock %}

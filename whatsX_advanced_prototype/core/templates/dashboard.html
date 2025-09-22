@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - WhatsApp Platform{% endblock %}
+
+{% block content %}
+<style>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+    .stat-card {
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+    }
+    .stat-card h2 {
+        font-size: 3.5em;
+        margin: 0 0 10px 0;
+    }
+    .stat-card p {
+        font-size: 1.2em;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+    }
+    .stat-card.purple { background-color: var(--accent-purple); }
+    .stat-card.green { background-color: var(--accent-green); }
+
+    .actions-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    .action-card {
+        padding: 30px;
+        border-radius: 8px;
+        background-color: var(--bg-medium);
+    }
+    .action-card i {
+        font-size: 1.5em;
+        margin-right: 15px;
+        color: var(--accent-green);
+    }
+    .action-card h3 {
+        font-size: 1.5em;
+        margin: 0 0 10px 0;
+        display: flex;
+        align-items: center;
+    }
+    .action-card p {
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="content-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's your account overview.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card purple">
+            <h2>{{ total_messages_sent }}</h2> <!-- <-- UPDATE THIS LINE -->
+            <p>Total Messages Sent</p>
+            <a href="{% url 'message_history' %}" class="btn btn-green-outline">View Messages</a>
+        </div>
+        <div class="stat-card green">
+            <h2>0</h2>
+            <p>Contacts Saved</p>
+        </div>
+    </div>
+
+    <div class="actions-grid">
+        <div class="action-card">
+            <h3><i class="fas fa-paper-plane"></i> Send Message</h3>
+            <p>Send WhatsApp messages to your contacts instantly.</p>
+            <a href="{% url 'send_message' %}" class="btn btn-green-outline">Send Now</a>
+        </div>
+        <div class="action-card">
+            <h3><i class="fas fa-history"></i> Message History</h3>
+            <p>View your sent messages and delivery status.</p>
+            <a href="#" class="btn btn-green-outline">View Messages</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

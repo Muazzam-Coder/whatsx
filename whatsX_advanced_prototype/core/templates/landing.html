@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome - WhatsApp Platform{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+        text-align: center;
+        padding: 80px 20px;
+    }
+    .hero h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+    .hero p {
+        font-size: 1.3em;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto 30px auto;
+    }
+    .hero-actions .btn {
+        margin: 0 10px;
+    }
+    .features {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        padding: 50px 20px;
+    }
+    .feature-item {
+        max-width: 250px;
+    }
+    .feature-item i {
+        font-size: 3em;
+        color: var(--accent-green);
+        margin-bottom: 20px;
+    }
+    .feature-item h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    .feature-item p {
+        color: var(--text-secondary);
+    }
+</style>
+
+<div class="hero">
+    <h1><i class="fab fa-whatsapp"></i> WhatsApp Platform</h1>
+    <p>Send messages, manage contacts, and automate your WhatsApp communication.</p>
+    <div class="hero-actions">
+        <a href="{% url 'login' %}" class="btn btn-green"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="#" class="btn btn-green-outline"><i class="fas fa-user-plus"></i> Register</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="features">
+        <div class="feature-item">
+            <i class="fas fa-paper-plane"></i>
+            <h3>Send Messages</h3>
+            <p>Send WhatsApp messages to individuals or groups easily.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-address-book"></i>
+            <h3>Manage Contacts</h3>
+            <p>Store and organize your contacts for easy messaging.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-chart-line"></i>
+            <h3>Track Messages</h3>
+            <p>Monitor your message delivery and track performance.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
